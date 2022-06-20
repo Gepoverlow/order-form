@@ -6,8 +6,41 @@
 // This line makes PHP behave in a more strict way
 declare(strict_types=1);
 
+
+
 // We are going to use session variables so we need to enable sessions
 session_start();
+
+$products = [
+    ['name' => 'item 1', 'price' => 2.5],
+    ['name' => 'item 2', 'price' => 4.5],
+    ['name' => 'item 3', 'price' => 4],
+    ['name' => 'item 4', 'price' => 6.25],
+    ['name' => 'item 5', 'price' => 8],
+    ['name' => 'item 6', 'price' => 10],
+];
+
+if(isset($_POST['submit'])){
+
+$email = $_POST["email"];
+$street = $_POST["street"];
+$streetNumber = $_POST["streetnumber"];
+$city = $_POST["city"];
+$zipCode = $_POST["zipcode"];
+$checkedProducts = [];
+
+
+ foreach($_POST['products'] as $value){
+    array_push($checkedProducts, $products[$value]); 
+     }
+
+print_r($checkedProducts);
+
+
+
+displayConfirmationWindow($street, $streetNumber, $city, $zipCode);  
+
+}
 
 // Use this function when you need to need an overview of these variables
 function whatIsHappening() {
@@ -22,9 +55,9 @@ function whatIsHappening() {
 }
 
 // TODO: provide some products (you may overwrite the example)
-$products = [
-    ['name' => 'Your favourite drink', 'price' => 2.5],
-];
+
+
+
 
 $totalValue = 0;
 
@@ -32,6 +65,10 @@ function validate()
 {
     // TODO: This function will send a list of invalid fields back
     return [];
+}
+
+function displayConfirmationWindow($street, $streetNumber, $city, $zipCode ){
+    echo "We are watching you at $street, $streetNumber, $city, $zipCode";
 }
 
 function handleForm()
