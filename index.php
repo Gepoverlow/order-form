@@ -28,17 +28,14 @@ $streetNumber = $_POST["streetnumber"];
 $city = $_POST["city"];
 $zipCode = $_POST["zipcode"];
 $checkedProducts = [];
-
+$checkedProductsNames = [];
 
  foreach($_POST['products'] as $value){
-    array_push($checkedProducts, $products[$value]); 
+     array_push($checkedProductsNames, $products[$value]["name"]); 
+     array_push($checkedProducts, $products[$value]); 
      }
 
-print_r($checkedProducts);
-
-
-
-displayConfirmationWindow($street, $streetNumber, $city, $zipCode);  
+displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProductsNames);  
 
 }
 
@@ -67,8 +64,9 @@ function validate()
     return [];
 }
 
-function displayConfirmationWindow($street, $streetNumber, $city, $zipCode ){
-    echo "We are watching you at $street, $streetNumber, $city, $zipCode";
+function displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProducts ){
+    $productString = implode(", ", $checkedProducts);
+    echo "<h3>Thank you for your purchase! We will be sending: $productString to: $street, $streetNumber in $city with zipCode $zipCode</h3>";
 }
 
 function handleForm()
