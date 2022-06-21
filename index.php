@@ -43,10 +43,44 @@ function whatIsHappening() {
 
 $totalValue = 0;
 
-function validate()
-{
+function validate() {
     // TODO: This function will send a list of invalid fields back
-    return [];
+
+$errorMessages = [];
+$pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";
+
+//Email validation check for empty field & valid email
+if(empty($_POST["email"])){
+    array_push($errorMessages, "Email is empty");
+} elseif (!preg_match ($pattern, $_POST["email"])){
+    array_push($errorMessages, "Email is invalid");
+}
+
+//Street validation for empty
+if(empty($_POST["street"])){
+    array_push($errorMessages, "Street is empty");
+}
+
+//City validation for empty
+if(empty($_POST["city"])){
+    array_push($errorMessages, "City is empty");
+}
+
+//Streetnumber validation for empty & valid number
+if(empty($_POST["streetnumber"])){
+    array_push($errorMessages, "Streetnumber is empty");
+} elseif (!preg_match ("/^[0-9]*$/", $_POST["streetnumber"]) ){
+    array_push($errorMessages, "Streetnumber has to be a Number");
+}
+
+//Zipcode validation for empty & valid number
+if(empty($_POST["zipcode"])){
+    array_push($errorMessages, "Zipcode is empty");
+} elseif (!preg_match ("/^[0-9]*$/", $_POST["zipcode"]) ){
+    array_push($errorMessages, "Zipcode has to be a Number");
+}
+
+return $errorMessages;
 }
 
 function displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProducts ){
@@ -74,6 +108,7 @@ displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProdu
 
     // Validation (step 2)
     $invalidFields = validate();
+    var_dump($invalidFields);
     if (!empty($invalidFields)) {
         // TODO: handle errors
     } else {
