@@ -6,8 +6,6 @@
 // This line makes PHP behave in a more strict way
 declare(strict_types=1);
 
-
-
 // We are going to use session variables so we need to enable sessions
 session_start();
 
@@ -48,19 +46,18 @@ $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})
 checkIfEmpty("email", $errorMessages, "Email is Empty");
 validateEmail($pattern, "email", $errorMessages, "Email is not valid");
 
+//Zipcode validation for empty & valid number
+checkIfEmpty("zipcode", $errorMessages, "Zipcode is empty");
+checkIfNumber("zipcode", $errorMessages, "Zipcode has to be a number");
+
 //Street validation for empty
 checkIfEmpty("street", $errorMessages, "Street is empty");
 
 //City validation for empty
 checkIfEmpty("city", $errorMessages, "City is empty");
 
-//Streetnumber validation for empty & valid number
+//Streetnumber validation for empty
 checkIfEmpty("streetnumber", $errorMessages, "Streetnumber is empty");
-checkIfNumber("streetnumber", $errorMessages, "Streetnumber has to be a number");
-
-//Zipcode validation for empty & valid number
-checkIfEmpty("zipcode", $errorMessages, "Zipcode is empty");
-checkIfNumber("zipcode", $errorMessages, "Zipcode has to be a number");
 
 //Check that at least an item has been checked
 checkIfEmpty("products", $errorMessages, "Please select at least 1 item");
@@ -96,7 +93,6 @@ function handleForm($productsArray) {
 
     // Validation (step 2)
     $invalidFields = validate();
-    var_dump($invalidFields);
     if (!empty($invalidFields)) {
         // TODO: handle errors
     } else {
