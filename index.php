@@ -21,22 +21,7 @@ $products = [
 ];
 
 if(isset($_POST['submit'])){
-
-$email = $_POST["email"];
-$street = $_POST["street"];
-$streetNumber = $_POST["streetnumber"];
-$city = $_POST["city"];
-$zipCode = $_POST["zipcode"];
-$checkedProducts = [];
-$checkedProductsNames = [];
-
- foreach($_POST['products'] as $value){
-     array_push($checkedProductsNames, $products[$value]["name"]); 
-     array_push($checkedProducts, $products[$value]); 
-     }
-
-displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProductsNames);  
-
+handleForm($products);
 }
 
 // Use this function when you need to need an overview of these variables
@@ -69,9 +54,23 @@ function displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $che
     echo "<h3>Thank you for your purchase! We will be sending: $productString to: $street, $streetNumber in $city with zipCode $zipCode</h3>";
 }
 
-function handleForm()
-{
+function handleForm($productsArray) {
     // TODO: form related tasks (step 1)
+
+$email = $_POST["email"];
+$street = $_POST["street"];
+$streetNumber = $_POST["streetnumber"];
+$city = $_POST["city"];
+$zipCode = $_POST["zipcode"];
+$checkedProducts = [];
+$checkedProductsNames = [];
+
+foreach($_POST['products'] as $value){
+    array_push($checkedProductsNames, $productsArray[$value]["name"]); 
+    array_push($checkedProducts, $productsArray[$value]); 
+     }
+
+displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProductsNames);  
 
     // Validation (step 2)
     $invalidFields = validate();
@@ -82,10 +81,10 @@ function handleForm()
     }
 }
 
-// TODO: replace this if by an actual check
-$formSubmitted = false;
-if ($formSubmitted) {
-    handleForm();
-}
+// // TODO: replace this if by an actual check
+// $formSubmitted = false;
+// if ($formSubmitted) {
+//     handleForm();
+// }
 
 require 'form-view.php';
