@@ -36,51 +36,54 @@ function whatIsHappening() {
     var_dump($_SESSION);
 }
 
-// TODO: provide some products (you may overwrite the example)
-
-
-
-
 $totalValue = 0;
 
 function validate() {
-    // TODO: This function will send a list of invalid fields back
+// TODO: This function will send a list of invalid fields back
 
 $errorMessages = [];
 $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";
 
 //Email validation check for empty field & valid email
-if(empty($_POST["email"])){
-    array_push($errorMessages, "Email is empty");
-} elseif (!preg_match ($pattern, $_POST["email"])){
-    array_push($errorMessages, "Email is invalid");
-}
+checkIfEmpty("email", $errorMessages, "Email is Empty");
+validateEmail($pattern, "email", $errorMessages, "Email is not valid");
 
 //Street validation for empty
-if(empty($_POST["street"])){
-    array_push($errorMessages, "Street is empty");
-}
+checkIfEmpty("street", $errorMessages, "Street is empty");
 
 //City validation for empty
-if(empty($_POST["city"])){
-    array_push($errorMessages, "City is empty");
-}
+checkIfEmpty("city", $errorMessages, "City is empty");
 
 //Streetnumber validation for empty & valid number
-if(empty($_POST["streetnumber"])){
-    array_push($errorMessages, "Streetnumber is empty");
-} elseif (!preg_match ("/^[0-9]*$/", $_POST["streetnumber"]) ){
-    array_push($errorMessages, "Streetnumber has to be a Number");
-}
+checkIfEmpty("streetnumber", $errorMessages, "Streetnumber is empty");
+checkIfNumber("streetnumber", $errorMessages, "Streetnumber has to be a number");
 
 //Zipcode validation for empty & valid number
-if(empty($_POST["zipcode"])){
-    array_push($errorMessages, "Zipcode is empty");
-} elseif (!preg_match ("/^[0-9]*$/", $_POST["zipcode"]) ){
-    array_push($errorMessages, "Zipcode has to be a Number");
-}
+checkIfEmpty("zipcode", $errorMessages, "Zipcode is empty");
+checkIfNumber("zipcode", $errorMessages, "Zipcode has to be a number");
+
+//Check that at least an item has been checked
+checkIfEmpty("products", $errorMessages, "Please select at least 1 item");
 
 return $errorMessages;
+}
+
+function checkIfEmpty($sgName, &$errorsArray, $message){
+    if(empty($_POST[$sgName])){
+        array_push($errorsArray, $message);
+    }
+}
+
+function validateEmail($pattern, $sgName, &$errorsArray, $message){
+    if (!preg_match ($pattern, $_POST[$sgName])){
+        array_push($errorsArray, $message);
+    }
+}
+
+function checkIfNumber($sgName, &$errorsArray, $message){
+    if (!preg_match ("/^[0-9]*$/", $_POST[$sgName]) ){
+        array_push($errorsArray, $message);
+    }
 }
 
 function displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProducts ){
@@ -89,22 +92,7 @@ function displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $che
 }
 
 function handleForm($productsArray) {
-    // TODO: form related tasks (step 1)
-
-$email = $_POST["email"];
-$street = $_POST["street"];
-$streetNumber = $_POST["streetnumber"];
-$city = $_POST["city"];
-$zipCode = $_POST["zipcode"];
-$checkedProducts = [];
-$checkedProductsNames = [];
-
-foreach($_POST['products'] as $value){
-    array_push($checkedProductsNames, $productsArray[$value]["name"]); 
-    array_push($checkedProducts, $productsArray[$value]); 
-     }
-
-displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProductsNames);  
+    // TODO: form related tasks (step 1) 
 
     // Validation (step 2)
     $invalidFields = validate();
@@ -113,7 +101,21 @@ displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProdu
         // TODO: handle errors
     } else {
         // TODO: handle successful submission
-    }
+        $email = $_POST["email"];
+        $street = $_POST["street"];
+        $streetNumber = $_POST["streetnumber"];
+        $city = $_POST["city"];
+        $zipCode = $_POST["zipcode"];
+        $checkedProducts = [];
+        $checkedProductsNames = [];
+
+        foreach($_POST['products'] as $value){
+            array_push($checkedProductsNames, $productsArray[$value]["name"]); 
+            array_push($checkedProducts, $productsArray[$value]); 
+            }
+
+        displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProductsNames); 
+            }
 }
 
 // // TODO: replace this if by an actual check
