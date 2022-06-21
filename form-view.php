@@ -32,6 +32,16 @@
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES); ?>"/>
+                <?php
+                if (isset($_POST["submit"])){
+                    echo (in_array("Email is Empty",$errorMessages)) ? '<div class="alert alert-danger" role="alert">Email is Empty</div>' : "";
+                    if(!in_array("Email is Empty", $errorMessages)){
+                        echo (in_array("Email is not valid",$errorMessages)) ? '<div class="alert alert-danger" role="alert">Email is not valid</div>' : "";
+                    }
+                    
+                 }
+                //  echo (in_array("Email is Empty",$errorMessages)) ? "<div class=alert alert-danger role=alert>Email is Empty</div>" : "" 
+                 ?>
             </div>
             <div></div>
         </div>
@@ -43,20 +53,39 @@
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
                     <input type="text" name="street" id="street" class="form-control" value="<?php echo htmlspecialchars($_POST['street'] ?? '', ENT_QUOTES); ?>">
+                    <?php if(isset($_POST["street"])){
+                        echo (in_array("Street is empty",$errorMessages)) ? '<div class="alert alert-danger" role="alert">Street is empty</div>' : "";
+                    } ?>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
                     <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo htmlspecialchars($_POST['streetnumber'] ?? '', ENT_QUOTES); ?>">
+                    <?php if(isset($_POST["submit"])){
+                        echo (in_array("Streetnumber is empty",$errorMessages)) ? '<div class="alert alert-danger" role="alert">Streetnumber is empty</div>' : "";
+                    } ?>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
                     <input type="text" id="city" name="city" class="form-control" value="<?php echo htmlspecialchars($_POST['city'] ?? '', ENT_QUOTES); ?>">
+                    <?php if(isset($_POST["submit"])){
+                        echo (in_array("City is empty",$errorMessages)) ? '<div class="alert alert-danger" role="alert">City is empty</div>' : "";
+                    } ?>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
                     <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo htmlspecialchars($_POST['zipcode'] ?? '', ENT_QUOTES); ?>">
+                    <?php
+                if (isset($_POST["submit"])){
+                    echo (in_array("Zipcode is empty",$errorMessages)) ? '<div class="alert alert-danger" role="alert">Zipcode is Empty</div>' : "";
+                    if(!in_array("Zipcode is empty", $errorMessages)){
+                        echo (in_array("Zipcode has to be a number",$errorMessages)) ? '<div class="alert alert-danger" role="alert">Zipcode has to be a number</div>' : "";
+                    }
+                    
+                 }
+                //  echo (in_array("Email is Empty",$errorMessages)) ? "<div class=alert alert-danger role=alert>Email is Empty</div>" : "" 
+                 ?>
                 </div>
             </div>
         </fieldset>
@@ -69,6 +98,9 @@
                     <input type="checkbox" value=<?php echo $i ?> name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?> -
                     &euro; <?= number_format($product['price'], 2) ?></label><br />
             <?php endforeach; ?>
+            <?php if(isset($_POST["submit"])){
+                        echo (in_array("Please select at least 1 item",$errorMessages)) ? '<div class="alert alert-danger" role="alert">Please select at least 1 item</div>' : "";
+                    } ?>
         </fieldset>
 
         <button type="submit" name="submit" class="btn btn-primary">Order!</button>

@@ -19,7 +19,8 @@ $products = [
 ];
 
 if(isset($_POST['submit'])){
-handleForm($products);
+$errorMessages = validate();
+handleForm($products, $errorMessages);
 }
 
 // Use this function when you need to need an overview of these variables
@@ -88,13 +89,14 @@ function displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $che
     echo "<h3>Thank you for your purchase! We will be sending: $productString to: $street, $streetNumber in $city with zipCode $zipCode</h3>";
 }
 
-function handleForm($productsArray) {
+function handleForm($productsArray, $errorMessages) {
     // TODO: form related tasks (step 1) 
 
     // Validation (step 2)
-    $invalidFields = validate();
-    if (!empty($invalidFields)) {
+    // $invalidFields = validate();
+    if (!empty($errorMessages)) {
         // TODO: handle errors
+        // var_dump($errorMessages);
     } else {
         // TODO: handle successful submission
         $email = $_POST["email"];
