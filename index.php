@@ -39,7 +39,6 @@ $products = [
 if(isset($_POST['submit'])){
 $errorMessages = validate();
 handleForm($products, $errorMessages);
-whatIsHappening();
 }
 
 // Use this function when you need to need an overview of these variables
@@ -110,6 +109,8 @@ function displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $che
     echo "</div>";
 }
 
+function saveAddressInCookie(){}
+
 function handleForm($productsArray, $errorMessages) {
     // TODO: form related tasks (step 1) 
 
@@ -134,6 +135,7 @@ function handleForm($productsArray, $errorMessages) {
             }
 
         displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProductsNames); 
+        saveAddressInCookie();
             }
 }
 
