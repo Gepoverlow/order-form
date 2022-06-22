@@ -86,7 +86,9 @@ function checkIfNumber($sgName, &$errorsArray, $message){
 
 function displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProducts ){
     $productString = implode(", ", $checkedProducts);
-    echo "<h3>Thank you for your purchase! We will be sending: $productString to: $street, $streetNumber in $city with zipCode $zipCode</h3>";
+    echo '<div class="alert alert-success" role="alert">';
+    echo "Thank you for your purchase! We will be sending: $productString to: $street, $streetNumber in $city with zipCode $zipCode";
+    echo "</div>";
 }
 
 function handleForm($productsArray, $errorMessages) {
