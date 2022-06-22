@@ -7,7 +7,25 @@
 declare(strict_types=1);
 
 // We are going to use session variables so we need to enable sessions
+
+// echo '<script>window.alert("hello")</script>';
+
+$show_consent;
+
+if(!isset($_COOKIE['cookies'])){
+	// First time visitor
+    $show_consent = true;
+    $cookies = ['consent'=>0,'analytic' => 0, 'ads' => 0];
+	$cookies_string = json_encode($cookies);
+    setcookie("cookies", "cookies consent", time() + (86400 * 30), "/"); // 86400 = 1 day
+}else{
+    // Continue with the website with consent
+    $show_consent = false;
+    
+}
+
 session_start();
+
 
 $products = [
     ['name' => 'item 1', 'price' => 2.5],
@@ -21,6 +39,7 @@ $products = [
 if(isset($_POST['submit'])){
 $errorMessages = validate();
 handleForm($products, $errorMessages);
+whatIsHappening();
 }
 
 // Use this function when you need to need an overview of these variables

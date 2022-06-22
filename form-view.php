@@ -12,6 +12,15 @@
     <title>Your fancy store</title>
 </head>
 <body>
+<?php if($show_consent == True){ ?>
+	<input type="checkbox" id="close_cookie"></input>
+	<div id="cookie_consent_popup">
+		<h1>Cookies</h1>
+		<label for="close_cookie" id="close_cookie_box">X</label>
+		<p>This websites uses cookies. By clicking 'OK', 'X' or continuing using our site, you consent to the use of cookies unless you disabled them.<p>
+		<label for="close_cookie" id="ok_cookie_box">OK</label>
+	</div>
+<?php }?>
 <div class="container">
     <h1>Place your order</h1>
     <?php // Navigation for when you need it ?>
@@ -27,6 +36,7 @@
         </ul>
     </nav>
     */ ?>
+    
     <form action="index.php" method="post">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -113,6 +123,42 @@
     footer {
         text-align: center;
     }
+    #close_cookie{display:none;}
+	#close_cookie:checked + #cookie_consent_popup{display:none;}	
+#cookie_consent_popup{
+	position:fixed;
+	bottom:30px;left:30px;
+	width:400px;
+	height:180px;
+	background-color:#fbb63e;
+	padding:20px;
+	 z-index:2;
+}
+	#cookie_consent_popup h1{
+		font-size:1.2em;
+	}
+		#cookie_consent_popup h1:before{
+			content:"";
+			padding:0;
+		}
+	#cookie_consent_popup p{
+		font-size:0.7em;
+	}
+	#cookie_consent_popup #close_cookie_box{
+		position:absolute;
+		top:20px;right:20px;
+		cursor:pointer;
+		font-size:1.3em;
+	}
+	#cookie_consent_popup #ok_cookie_box{
+		position:absolute;
+		bottom:20px;right:20px;
+		cursor:pointer;
+		font-size:1.6em;
+		padding:10px 20px;
+		font-weight:700;
+		color:white;
+	}
 </style>
 </body>
 </html>
