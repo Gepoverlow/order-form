@@ -104,23 +104,23 @@ function checkIfNumber($sgName, &$errorsArray, $message){
 
 function displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProducts ){
     $productString = implode(", ", $checkedProducts);
+    saveAddressInCookie($street, $city, $streetNumber, $zipCode);
     echo '<div class="alert alert-success" role="alert">';
     echo "Thank you for your purchase! We will be sending: $productString to: $street, $streetNumber in $city with zipCode $zipCode";
     echo "</div>";
 }
 
-function saveAddressInCookie(){}
+function saveAddressInCookie($street, $city, $streetNumber, $zipcode){
+    setcookie("streetCookie",$street);
+    setcookie("cityCookie", $city);
+    setcookie("streetnumberCookie", $streetNumber);
+    setcookie("zipcodeCookie", $zipcode);
+    whatIsHappening();
+}
 
 function handleForm($productsArray, $errorMessages) {
-    // TODO: form related tasks (step 1) 
-
-    // Validation (step 2)
-    // $invalidFields = validate();
-    if (!empty($errorMessages)) {
-        // TODO: handle errors
-        // var_dump($errorMessages);
-    } else {
-        // TODO: handle successful submission
+    if (empty($errorMessages)) {
+        
         $email = $_POST["email"];
         $street = $_POST["street"];
         $streetNumber = $_POST["streetnumber"];
@@ -135,7 +135,7 @@ function handleForm($productsArray, $errorMessages) {
             }
 
         displayConfirmationWindow($street, $streetNumber, $city, $zipCode, $checkedProductsNames); 
-        saveAddressInCookie();
+        
             }
 }
 
